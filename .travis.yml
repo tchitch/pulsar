@@ -47,8 +47,16 @@ before_install:
   - export PATH=$M2_HOME/bin:$PATH
 
 script:
-    # Build Java
-    - (mvn install -DskipTests) || exit -1
-    # Build docker images
-    - (mvn -f docker/pom.xml install -DskipTests -Pdocker) || exit -1
+  # Build Java
+  - (mvn install -DskipTests) || exit -1
+  # Build docker images
+  - docker/build.sh || exit -1
+
+deploy:
+  -
+    provider: script
+    skip_cleanup: true
+    script: docker/publish.sh
+    on:
+       tags: true
 
