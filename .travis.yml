@@ -19,7 +19,9 @@
 
 dist: trusty 
 
-language: java
+language: java cpp 
+
+compiler: gcc
 
 jdk:
   - oraclejdk8
@@ -35,11 +37,6 @@ cache:
   - $HOME/pulsar-dep
   - "$HOME/apache-maven-3.5.0"
 
-# Reconstruct the gpg keys to sign the artifacts
-before_deploy:
-  - echo $GPG_SECRET_KEYS | base64 --decode | $GPG_EXECUTABLE --import --batch || true
-  - echo $GPG_OWNERTRUST | base64 --decode | $GPG_EXECUTABLE --import-ownertrust --batch || true
-
 # Upgrade to maven 3.5.0
 before_install:
   - export M2_HOME=$HOME/apache-maven-3.5.0
@@ -50,7 +47,7 @@ script:
   # Build Java
   - (mvn install -DskipTests) || exit -1
   # Build docker images
-  - docker/build.sh || exit -1
+  - (mvn package -DskipTests -Pdocker) || exit -1
 
 deploy:
   -
