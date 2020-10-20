@@ -47,7 +47,7 @@ script:
   # Build Java
   - (mvn install -DskipTests) || exit -1
   # Build docker images
-  - (mvn package -f docker/pom.xml -DskipTests -Pdocker) || exit -1
+  - (mvn package -f docker/pulsar/pom.xml -DskipTests -Pdocker) || exit -1
 
 deploy:
   -
