@@ -71,7 +71,7 @@ public class ZooKeeperSessionWatcher implements Watcher, StatCallback, Runnable,
     public ZooKeeperSessionWatcher(ZooKeeper zk, long zkSessionTimeoutMillis, ZookeeperSessionExpiredHandler sessionExpiredHandler) {
         this.zk = zk;
         this.monitorTimeoutMillis = zkSessionTimeoutMillis * 5 / 6;
-        this.tickTimeMillis = zkSessionTimeoutMillis / 15;
+        this.tickTimeMillis = zkSessionTimeoutMillis / 6;
         this.sessionExpiredHandler = sessionExpiredHandler;
         this.sessionExpiredHandler.setWatcher(this);
     }
